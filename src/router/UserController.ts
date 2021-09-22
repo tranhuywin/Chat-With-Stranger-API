@@ -21,4 +21,8 @@ router.get('/me/:idUser', (req: Request, res: Response): void => {
     })
 })
 
+router.get('/', (req: Request, res: Response): void => {
+    res.send("user");
+})
+
 export default router;
