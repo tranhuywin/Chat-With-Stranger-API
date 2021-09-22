@@ -20,7 +20,7 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 (0, router_1.default)(app);
-const port = 3000; // || process.env.PORT;
+const port = 3000 || process.env.PORT;
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
