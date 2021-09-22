@@ -1,1 +1,1 @@
-worker: node build/
+worker: node ./build
