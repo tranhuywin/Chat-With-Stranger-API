@@ -22,4 +22,13 @@ async function GetUser(id: String) {
     }
 }
 
-export default { CreateUser, GetUser }
+async function UpdateUser(id:string, user:IUser) {
+    try {
+        const result = await UserModel.findByIdAndUpdate(id, user);
+        return result;
+    } catch (error) {
+        throw new Error("Update User failed");
+    }
+}
+
+export default { CreateUser, GetUser, UpdateUser }

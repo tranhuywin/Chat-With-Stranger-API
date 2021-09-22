@@ -36,4 +36,15 @@ function GetUser(id) {
         }
     });
 }
-exports.default = { CreateUser, GetUser };
+function UpdateUser(id, user) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield UserShema_1.default.findByIdAndUpdate(id, user);
+            return result;
+        }
+        catch (error) {
+            throw new Error("Update User failed");
+        }
+    });
+}
+exports.default = { CreateUser, GetUser, UpdateUser };
