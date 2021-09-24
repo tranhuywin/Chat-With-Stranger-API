@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
+import { FriendSchema } from './ListFriendsSchema';
+import { ReportSchema } from './ReportSchema';
 
 const Schema = mongoose.Schema;
 
 
-const User = new Schema({
+const UserSchema = new Schema({
     FirstName: { type: String, required: true },
     LastName: { type: String, required: true },
     Avatar: { type: String },
@@ -16,7 +18,10 @@ const User = new Schema({
     },
     CodeAddFriend: { type: String, required: true },
     NumberOfTimesReported: { type: Number, default: 0 },
+    ListFriends: { type: FriendSchema, required: false },
+    ListBlocks: { type: FriendSchema, required: false },
+    ResonReport: {type: [ReportSchema]}
 });
 
-const UserModel = mongoose.model('User', User);
-export default UserModel;
+const UserModel = mongoose.model('User', UserSchema);
+export { UserModel, UserSchema };
