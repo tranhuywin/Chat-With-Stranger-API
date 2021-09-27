@@ -1,5 +1,6 @@
 ## Requirements
-[NodeJs](https://nodejs.org/en/download/) Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
+Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine.
+[Download NodeJs](https://nodejs.org/en/download/)
 
 ## Installation
 $ npm install
@@ -9,8 +10,8 @@ $ npm run dev
 
 ## Running the app (production)
 
-# build
+### build
 $ npm run build
 
-# start
+### start
 $ npm run start
