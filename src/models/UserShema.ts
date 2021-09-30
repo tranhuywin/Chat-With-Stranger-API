@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { FriendSchema } from './ListFriendsSchema';
+import { FriendSchema } from './FriendsSchema';
 import { ReportSchema } from './ReportSchema';
 
 const Schema = mongoose.Schema;

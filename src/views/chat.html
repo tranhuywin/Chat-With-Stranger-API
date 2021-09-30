@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+        <title>Chat demo</title>
+    </head>
+    <body>
+        <h3 class="idUser"></h3>
+        <button onclick="getid()">get id</button><br>
+        <label>text: </label><input type="text" class="message" />
+        <button onclick="sendMessage()">send</button><br>
+        <label>room: </label><input type="text" class="room" />
+        <button onclick="joinRoom()">join</button><br>
+        <h3 class="messageOutput"></h3>
+        <!-- <script src="/socket.io/socket.io.js"></script> -->
+        <script>
+            const socket = io("http://localhost:3000/");
+            socket.on("connection");
+
+            socket.on("receive-message-from-room", (data) => {
+                console.log(data);
+                const messageOutput = document.querySelector(".messageOutput");
+                messageOutput.innerHTML = data;
+            });
+
+            const sendMessage = () => {
+                const messageInput = document.querySelector(".message");
+                const roomInput = document.querySelector(".room");
+                socket.emit("send-message", messageInput.value, roomInput.value);
+            };
+
+            const joinRoom = () => {
+                const roomInput = document.querySelector(".room");
+                socket.emit('join-room', roomInput.value);
+            };
+
+            const getid = () =>{
+                const id = document.querySelector(".idUser");
+                id.innerHTML = socket.id;
+            }
+        </script>
+    </body>
+</html>

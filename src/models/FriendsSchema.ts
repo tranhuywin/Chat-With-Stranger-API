@@ -1,10 +1,9 @@
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
 const FriendSchema = new Schema({
-    _id: { type: Types.ObjectId },
-    ListIdFriends: { type: [Types.ObjectId] },
+    ListIdFriends: { type: [Schema.Types.ObjectId] },
 });
 
 const FriendModel = mongoose.model('Friend', FriendSchema);

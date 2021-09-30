@@ -11,7 +11,7 @@ const UserShema = Joi.object({
         To: Joi.number().min(10).max(60).required(),
         Sex: Joi.string().required(),
     },
-    CodeAddFriend: Joi.string().length(6).required(),
+    CodeAddFriend: Joi.string().length(5),
     NumberOfTimesReported: Joi.number().default(0).required(),
 })
 
