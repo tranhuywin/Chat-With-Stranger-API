@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { FriendSchema } from './FriendsSchema';
+import IUser from '../interfaces/IUser';
 import { ReportSchema } from './ReportSchema';
 
 const Schema = mongoose.Schema;
@@ -18,10 +18,10 @@ const UserSchema = new Schema({
     },
     CodeAddFriend: { type: String, required: true },
     NumberOfTimesReported: { type: Number, default: 0 },
-    ListFriends: { type: FriendSchema, required: false },
-    ListBlocks: { type: FriendSchema, required: false },
+    ListFriends: { type: [mongoose.Types.ObjectId], required: false },
+    ListBlocks: { type: [mongoose.Types.ObjectId], required: false },
     ResonReport: {type: [ReportSchema]}
 });
 
-const UserModel = mongoose.model('User', UserSchema);
-export { UserModel, UserSchema };
+const UserModel = mongoose.model<IUser>('User', UserSchema);
+export { UserModel, UserSchema};

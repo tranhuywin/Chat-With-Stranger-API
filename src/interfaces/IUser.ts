@@ -1,4 +1,6 @@
-export default interface IUser {
+import { Document } from "mongoose"
+
+export default interface IUser extends Document {
     FirstName: string,
     LastName: string,
     Email: string,
@@ -11,4 +13,11 @@ export default interface IUser {
     }
     CodeAddFriend: string,
     NumberOfTimesReported: number,
+    ListFriends:[string],
+    ListBlocks:[string],
+    ResonReport:[{
+        _id: string,
+        Reson: string,
+        DateAt: Date
+    }]
 }
