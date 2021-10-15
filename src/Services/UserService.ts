@@ -1,7 +1,8 @@
+import IReson from "../interfaces/IReson";
 import IUser from "../interfaces/IUser";
 import { UserModel } from "../models/UserShema";
 
-async function CreateUser(user: IUser): Promise<IUser>{
+async function CreateUser(user: IUser): Promise<IUser> {
     let ramdomCode = (Math.random() + 1).toString(36).substring(7).toUpperCase();
     try {
         user.CodeAddFriend = ramdomCode;
@@ -13,10 +14,10 @@ async function CreateUser(user: IUser): Promise<IUser>{
     }
 }
 
-async function GetUser(id: String): Promise<IUser>{
+async function GetUser(id: String): Promise<IUser> {
     try {
         const user = await UserModel.findById(id);
-        if(!user)
+        if (!user)
             throw new Error("Find User null");
         return user;
     } catch (error) {
@@ -34,16 +35,18 @@ async function UpdateUser(id: string, user: IUser) {
     }
 }
 
-async function RefreshCode(id: string) {
-
-}
-
-async function AddFriend(id: string, idFriend: string){
+async function AddFriend(id: string, idFriend: string) {
     try {
         const user = await UserModel.findById(id);
         const friend = await UserModel.findById(idFriend);
-        if(!user || !friend)
+        if (!user || !friend)
             throw new Error("Find User null");
+
+        user.ListFriends.find((value) => {
+            if (idFriend === value.toString()) {
+                throw new Error("User had idfriend");
+            }
+        });
         user.ListFriends.push(idFriend);
         user.save();
         friend.ListFriends.push(id);
@@ -54,4 +57,17 @@ async function AddFriend(id: string, idFriend: string){
     }
 }
 
-export default { CreateUser, GetUser, UpdateUser, AddFriend }
+async function Reported(id: string, reson: IReson) {
+    UserModel.findById(id).then((user) => {
+        if (!user)
+            throw new Error("User null");
+
+        user.ResonReport.push(reson);
+    }).catch((Error)=>{
+        throw new Error(Error);
+    });
+
+
+}
+
+export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported }
