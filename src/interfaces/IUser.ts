@@ -16,7 +16,6 @@ export default interface IUser extends Document {
     ListFriends:[string],
     ListBlocks:[string],
     ResonReport:[{
-        _id: string,
         Reson: string,
         DateAt: Date
     }]

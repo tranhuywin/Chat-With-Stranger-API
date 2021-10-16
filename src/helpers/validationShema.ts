@@ -15,4 +15,9 @@ const UserShema = Joi.object({
     NumberOfTimesReported: Joi.number().default(0).required(),
 })
 
-export default { UserShema }
+const ReportSchema = Joi.object({
+    Reson: Joi.string().required(),
+    DateAt: Joi.date().required(),
+})
+
+export default { UserShema, ReportSchema }

@@ -48,9 +48,4 @@ router.put('/me/:idUser', async (req: Request, res: Response) => {
     })
 })
 
-router.get('/refresh-code/:idUser', async (req: Request, res: Response) =>{
-    const { idUser } = req.params;
-
-    
-})
 export default router;

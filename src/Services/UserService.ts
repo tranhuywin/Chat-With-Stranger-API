@@ -58,16 +58,12 @@ async function AddFriend(id: string, idFriend: string) {
 }
 
 async function Reported(id: string, reson: IReson) {
-    UserModel.findById(id).then((user) => {
-        if (!user)
-            throw new Error("User null");
-
-        user.ResonReport.push(reson);
-    }).catch((Error)=>{
-        throw new Error(Error);
-    });
-
-
+    const user = await UserModel.findById(id);
+    if (!user)
+        throw new Error("Find User null");
+    user.ResonReport.push(reson);
+    user.save();
+    return user;
 }
 
 export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported }
