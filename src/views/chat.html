@@ -6,14 +6,20 @@
     </head>
     <body>
         <h3 class="idUser"></h3>
-        <button onclick="getid()">get id</button><br>
+        <button onclick="getid()">get id</button><br />
         <label>text: </label><input type="text" class="message" />
-        <button onclick="sendMessage()">send</button><br>
+        <button onclick="sendMessage()">send</button><br />
         <label>room: </label><input type="text" class="room" />
-        <button onclick="joinRoom()">join</button><br>
-        <button onclick="addFriend()">add friend</button><br>
-        <button onclick="acceptFriend()">accept friend</button><br>
+        <button onclick="joinRoom()">join</button><br />
+        <button onclick="addFriend()">add friend</button><br />
+        <button onclick="acceptFriend()">accept friend</button><br />
         <div class="messageOutput"></div>
+
+        <fb:login-button
+            scope="public_profile,email"
+            onlogin="checkLoginState();"
+        >
+        </fb:login-button>
         <!-- <script src="/socket.io/socket.io.js"></script> -->
         <script>
             const socket = io("http://localhost:3000/");
@@ -30,30 +36,69 @@
             const sendMessage = () => {
                 const messageInput = document.querySelector(".message");
                 const roomInput = document.querySelector(".room");
-                socket.emit("message:send-message", messageInput.value, roomInput.value);
+                socket.emit(
+                    "message:send-message",
+                    messageInput.value,
+                    roomInput.value
+                );
             };
 
             const joinRoom = () => {
                 const roomInput = document.querySelector(".room");
-                socket.emit('join-room', roomInput.value);
+                socket.emit("join-room", roomInput.value);
             };
 
-            const getid = () =>{
+            const getid = () => {
                 const id = document.querySelector(".idUser");
                 id.innerHTML = socket.id;
-            }
+            };
 
-            const addFriend = () =>{
-                socket.emit('friend:request-add-friend', 'id');
-            }
+            const addFriend = () => {
+                socket.emit("friend:request-add-friend", "id");
+            };
 
             const IaddFriend = {
-                _id: '6146adab6056c30c8fa03919',
-                dateAt: '2021-10-2',
-                _idFriend: '614e91a25c6521171a82a2bc',
-            }
-            const acceptFriend = () =>{
-                socket.emit('friend:accept-request-add-friend', IaddFriend);
+                _id: "6146adab6056c30c8fa03919",
+                dateAt: "2021-10-2",
+                _idFriend: "614e91a25c6521171a82a2bc",
+            };
+            const acceptFriend = () => {
+                socket.emit("friend:accept-request-add-friend", IaddFriend);
+            };
+        </script>
+
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: "{your-app-id}",
+                    cookie: true,
+                    xfbml: true,
+                    version: "{api-version}",
+                });
+
+                FB.AppEvents.logPageView();
+            };
+
+            (function (d, s, id) {
+                var js,
+                    fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            })(document, "script", "facebook-jssdk");
+
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+
+            function checkLoginState() {
+                FB.getLoginStatus(function (response) {
+                    statusChangeCallback(response);
+                });
             }
         </script>
     </body>

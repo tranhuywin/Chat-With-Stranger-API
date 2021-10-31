@@ -4,7 +4,7 @@ import validationShema from "../helpers/validationShema";
 
 const router = Router();
 
-router.post('/sign-in', async (req: Request, res: Response) => {
+router.post('/sign-up', async (req: Request, res: Response) => {
     //validation data Request
     const user = req.body;
     try {
