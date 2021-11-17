@@ -2,6 +2,10 @@ import IReson from "../interfaces/IReson";
 import IUser from "../interfaces/IUser";
 import { UserModel } from "../models/UserShema";
 
+async function getAll(): Promise<IUser[]> {
+    return await UserModel.find();
+}
+
 async function CreateUser(user: IUser): Promise<IUser> {
     let ramdomCode = (Math.random() + 1).toString(36).substring(7).toUpperCase();
     try {
@@ -66,4 +70,4 @@ async function Reported(id: string, reson: IReson) {
     return user;
 }
 
-export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported }
+export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported, getAll };
