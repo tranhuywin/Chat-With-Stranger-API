@@ -8,6 +8,9 @@ async function getAll(): Promise<IUser[]> {
 
 async function CreateUser(user: IUser): Promise<IUser> {
     let ramdomCode = (Math.random() + 1).toString(36).substring(7).toUpperCase();
+    const userEmail = await GetUserByEmail(user.Email).catch(() => {});
+    if (userEmail)
+        throw new Error("Email has already been used");
     try {
         user.CodeAddFriend = ramdomCode;
         const userModel = new UserModel(user);
@@ -21,6 +24,17 @@ async function CreateUser(user: IUser): Promise<IUser> {
 async function GetUser(id: String): Promise<IUser> {
     try {
         const user = await UserModel.findById(id);
+        if (!user)
+            throw new Error("Find User null");
+        return user;
+    } catch (error) {
+        throw new Error("Find User failed");
+    }
+}
+
+async function GetUserByEmail(email: string): Promise<IUser> {
+    try {
+        const user = await UserModel.findOne({ Email: email });
         if (!user)
             throw new Error("Find User null");
         return user;
@@ -70,4 +84,4 @@ async function Reported(id: string, reson: IReson) {
     return user;
 }
 
-export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported, getAll };
+export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported, getAll, GetUserByEmail };

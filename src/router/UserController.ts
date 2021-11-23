@@ -35,6 +35,17 @@ router.get('/me/:idUser', async (req: Request, res: Response) => {
     })
 })
 
+router.get('/email/:email', async (req: Request, res: Response) => {
+    const { email } = req.params;
+
+    UserService.GetUserByEmail(email).then((user) => {
+        res.status(200).json({ status: "Success", user: user });
+    }).catch((e: Error) => {
+        res.status(400).json({ status: e.message });
+    })
+    })
+
+
 router.put('/me/:idUser', async (req: Request, res: Response) => {
     const { idUser } = req.params;
     //validation data Request
@@ -45,7 +56,7 @@ router.put('/me/:idUser', async (req: Request, res: Response) => {
         res.status(400).json({ status: error.details });
         return;
     }
-    
+
     UserService.UpdateUser(idUser, user).then((user) => {
         res.status(200).json({ status: "Success", user: user });
     }).catch((e: Error) => {

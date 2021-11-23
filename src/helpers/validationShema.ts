@@ -1,8 +1,7 @@
 import Joi from "joi";
 
 const UserShema = Joi.object({
-    FirstName: Joi.string().required(),
-    LastName: Joi.string().required(),
+    FullName: Joi.string().required(),
     Email: Joi.string().email().required(),
     Avatar: Joi.string().uri().required(),
     Sex: Joi.string().required(),
