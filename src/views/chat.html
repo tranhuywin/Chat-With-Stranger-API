@@ -13,6 +13,8 @@
         <button onclick="joinRoom()">join</button><br />
         <button onclick="addFriend()">add friend</button><br />
         <button onclick="acceptFriend()">accept friend</button><br />
+        <button onclick="StartChat()">start chat</button><br />
+        <button onclick="EndChat()">end chat</button>
         <div class="messageOutput"></div>
 
         <fb:login-button
@@ -24,33 +26,39 @@
         <script>
             const socket = io("http://localhost:3000/");
             socket.on("connection");
+            let idUser;
 
             socket.on("receive-message-from-room", (data) => {
                 console.log(data);
                 const messageOutput = document.querySelector(".messageOutput");
                 const newMessage = document.createElement("h3");
-                newMessage.innerHTML = data;
+                newMessage.innerHTML = data.name + ": " + data.message;
                 messageOutput.appendChild(newMessage);
             });
-
+            socket.on("start-chat", (data) => {
+                console.log(data);
+            });
+            socket.on("start-search-stranger", (data) => {
+                console.log(data);
+            });
+            socket.on('chat-end', (data) =>{
+                console.log(data)
+            })
             const sendMessage = () => {
                 const messageInput = document.querySelector(".message");
                 const roomInput = document.querySelector(".room");
-                socket.emit(
-                    "message:send-message",
-                    messageInput.value,
-                    roomInput.value
-                );
+                socket.emit("message:send-message", messageInput.value);
             };
 
             const joinRoom = () => {
                 const roomInput = document.querySelector(".room");
-                socket.emit("join-room", roomInput.value);
+                socket.emit("room:join-room", roomInput.value);
             };
 
             const getid = () => {
                 const id = document.querySelector(".idUser");
                 id.innerHTML = socket.id;
+                idUser = socket.id;
             };
 
             const addFriend = () => {
@@ -65,40 +73,16 @@
             const acceptFriend = () => {
                 socket.emit("friend:accept-request-add-friend", IaddFriend);
             };
-        </script>
 
-        <script>
-            window.fbAsyncInit = function () {
-                FB.init({
-                    appId: "{your-app-id}",
-                    cookie: true,
-                    xfbml: true,
-                    version: "{api-version}",
-                });
-
-                FB.AppEvents.logPageView();
+            const StartChat = () => {
+                console.log("id", idUser);
+                const name = Math.round(Math.random() * 10);
+                console.log(name);
+                socket.emit("message:start-search-stranger", idUser, name);
             };
 
-            (function (d, s, id) {
-                var js,
-                    fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {
-                    return;
-                }
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "https://connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            })(document, "script", "facebook-jssdk");
-
-            FB.getLoginStatus(function (response) {
-                statusChangeCallback(response);
-            });
-
-            function checkLoginState() {
-                FB.getLoginStatus(function (response) {
-                    statusChangeCallback(response);
-                });
+            const EndChat = () =>{
+                socket.emit("message:end-chat-stranger");
             }
         </script>
     </body>
