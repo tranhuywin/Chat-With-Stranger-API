@@ -1,7 +1,7 @@
 import IReson from "../interfaces/IReson";
 import IUser from "../interfaces/IUser";
 import { UserModel } from "../models/UserShema";
-
+import userNull from "../helpers/userNull";
 async function getAll(): Promise<IUser[]> {
     return await UserModel.find();
 }

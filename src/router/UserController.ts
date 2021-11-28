@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import UserService from "../Services/UserService";
 import validationShema from "../helpers/validationShema";
+import userNull from "../helpers/userNull";
 
 const router = Router();
 
@@ -40,7 +41,7 @@ router.get('/email/user', async (req: Request, res: Response) => {
     UserService.GetUserByEmail(email).then((user) => {
         res.status(200).json({ status: "Success", user: user });
     }).catch((e: Error) => {
-        res.status(400).json({ status: e.message });
+        res.status(400).json({ status: e.message, user: userNull });
     })
     })
 

@@ -12,8 +12,7 @@ export const Friend = (io: Server, socket: Socket) => {
             .then((user) => {
                 const userRequestAddFriend = {
                     _id: user.id,
-                    FirstName: user.FirstName,
-                    LastName: user.LastName,
+                    FullName: user.FullName,
                     Avatar: user.Avatar,
                     idUserRequest: idFriend,
                     dateAt: GetYMDHMS(),
