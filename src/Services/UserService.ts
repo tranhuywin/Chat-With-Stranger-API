@@ -8,6 +8,7 @@ async function getAll(): Promise<IUser[]> {
 
 async function CreateUser(user: IUser): Promise<IUser> {
     let ramdomCode = (Math.random() + 1).toString(36).substring(7).toUpperCase();
+    user.Email = user.Email.toLowerCase();
     const userEmail = await GetUserByEmail(user.Email).catch(() => {});
     if (userEmail)
         throw new Error("Email has already been used");

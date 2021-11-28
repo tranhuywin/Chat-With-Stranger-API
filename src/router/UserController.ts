@@ -35,9 +35,8 @@ router.get('/me/:idUser', async (req: Request, res: Response) => {
     })
 })
 
-router.get('/email/:email', async (req: Request, res: Response) => {
-    const { email } = req.params;
-
+router.get('/email/user', async (req: Request, res: Response) => {
+    const email = req.query['email']?.toString() || '';
     UserService.GetUserByEmail(email).then((user) => {
         res.status(200).json({ status: "Success", user: user });
     }).catch((e: Error) => {
