@@ -35,9 +35,6 @@
                 newMessage.innerHTML = data.name + ": " + data.message;
                 messageOutput.appendChild(newMessage);
             });
-            socket.on("start-chat", (data) => {
-                console.log(data);
-            });
             socket.on("start-search-stranger", (data) => {
                 console.log(data);
             });
@@ -78,7 +75,7 @@
                 console.log("id", idUser);
                 const name = Math.round(Math.random() * 10);
                 console.log(name);
-                socket.emit("message:start-search-stranger", idUser, name);
+                socket.emit("message:start-search-stranger", name);
             };
 
             const EndChat = () =>{

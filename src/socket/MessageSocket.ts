@@ -9,7 +9,6 @@ export const Message = (io: Server, socket: Socket, queue: any, rooms: any, name
         const time = date.getHours() + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
          const data = {
              message: newMessage,
-             name: names[socket.id],
              time: time
          };
          console.log(data);
@@ -18,13 +17,13 @@ export const Message = (io: Server, socket: Socket, queue: any, rooms: any, name
         socket.broadcast.to(room).emit('receive-message-from-room', data);
     }
 
-    function StartSearchStranger(idUser: string, nameUser: string){
+    function StartSearchStranger(nameUser: string){
         names[socket.id] = nameUser;
         allUsers[socket.id] = socket;
         // now check if sb is in queue
         if (queue.length > 0) {
             const user = queue.shift();
-            const room = `${idUser}#${user}`;
+            const room = `${socket.id}#${user}`;
 
             rooms[socket.id] = room;
             rooms[user] = room;
