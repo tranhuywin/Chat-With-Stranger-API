@@ -12,7 +12,7 @@ export const Message = (io: Server, socket: Socket, queue: any, rooms: any, name
              name: names[socket.id],
              time: time
          };
-
+         console.log(data);
         const room: any = rooms[socket.id];
         socket.emit('receive-message-from-room', data);
         socket.broadcast.to(room).emit('receive-message-from-room', data);
@@ -46,8 +46,8 @@ export const Message = (io: Server, socket: Socket, queue: any, rooms: any, name
     function EndChatStranger(){
         let room = rooms[socket.id];
         if(!room) return
-        socket.broadcast.to(room).emit('chat-end', 'ket thuc chat');
-        socket.emit('chat-end', 'ket thuc chat');
+        socket.broadcast.to(room).emit('chat-end', {message: 'ket thuc chat'});
+        socket.emit('chat-end', {message: 'ket thuc chat'});
         let peerID = room.split('#');
         peerID = peerID[0] === socket.id ? peerID[1] : peerID[0];
         delete rooms[socket.id];
