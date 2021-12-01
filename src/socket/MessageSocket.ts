@@ -30,17 +30,11 @@ export const Message = (io: Server, socket: Socket, queue: any, rooms: any, name
             rooms[user] = room;
             socket.join(room);
             socket.to(user).socketsJoin(room);
-            socket.emit('start-chat', {
+            socket.emit('start-search-stranger', {
                 message: 'Bắt đầu chat',
-                user: user,
-                name: names[user],
-                room: room
             });
-            socket.to(user).emit('start-chat', {
+            socket.to(user).emit('start-search-stranger', {
                 message: 'Bắt đầu chat',
-                user: socket.id,
-                name: nameUser,
-                room: room
             });
         } else {
             queue.push(socket.id);
