@@ -9,12 +9,21 @@ export const Message = (io: Server, socket: Socket, queue: any, rooms: any, name
         const time = date.getHours() + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
          const data = {
              message: newMessage,
-             time: time
+             time: time,
+             isMyMessage: true
          };
          console.log(data);
         const room: any = rooms[socket.id];
-        socket.emit('receive-message-from-room', data);
-        socket.broadcast.to(room).emit('receive-message-from-room', data);
+        socket.emit('receive-message-from-room', {
+            message: newMessage,
+            time: time,
+            isMyMessage: true
+        });
+        socket.broadcast.to(room).emit('receive-message-from-room', {
+            message: newMessage,
+            time: time,
+            isMyMessage: false
+        });
     }
 
     function StartSearchStranger(nameUser: string){

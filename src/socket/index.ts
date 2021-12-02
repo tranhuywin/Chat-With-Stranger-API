@@ -13,5 +13,9 @@ export default function SocketIO(io: Server) {
         Message(io, socket, queue, rooms, names, allUsers);
         Friend(io, socket);
         Room(io, socket);
+
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+        });
     })
 }
