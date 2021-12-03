@@ -19,7 +19,7 @@ const UserSchema = new Schema({
     NumberOfTimesReported: { type: Number, default: 0 },
     ListFriends: { type: [mongoose.Types.ObjectId], required: false },
     ListBlocks: { type: [mongoose.Types.ObjectId], required: false },
-    ResonReport: {type: [ReportSchema]}
+    ResonReport: {type: [mongoose.Types.ObjectId], ref: 'Report'},
 });
 
 const UserModel = mongoose.model<IUser>('User', UserSchema);

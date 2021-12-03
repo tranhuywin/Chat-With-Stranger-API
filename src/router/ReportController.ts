@@ -7,9 +7,9 @@ import UserService from "../Services/UserService";
 
 const router = Router();
 
-router.get('/:idUser', async (req: Request, res: Response) => {
+router.get('/:email', async (req: Request, res: Response) => {
     const reson: IReson = req.body;
-    const { idUser } = req.params;
+    const { email } = req.params;
     reson.DateAt = new Date(GetYMDHMS());
 
     if (!IsResonReport(reson.Reson)) {
@@ -23,7 +23,7 @@ router.get('/:idUser', async (req: Request, res: Response) => {
         return;
     }
 
-    const dataSave = await UserService.Reported(idUser, reson);
+    const dataSave = await UserService.Reported(email, reson);
     res.status(200).json({ status: "Success", user: dataSave });
 })
 

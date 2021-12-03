@@ -1,6 +1,7 @@
 import IReson from "../interfaces/IReson";
 import IUser from "../interfaces/IUser";
 import { UserModel } from "../models/UserShema";
+import { ReportModel } from "../models/ReportSchema";
 import userNull from "../helpers/userNull";
 async function getAll(): Promise<IUser[]> {
     return await UserModel.find();
@@ -9,7 +10,7 @@ async function getAll(): Promise<IUser[]> {
 async function CreateUser(user: IUser): Promise<IUser> {
     let ramdomCode = (Math.random() + 1).toString(36).substring(7).toUpperCase();
     user.Email = user.Email.toLowerCase();
-    const userEmail = await GetUserByEmail(user.Email).catch(() => {});
+    const userEmail = await GetUserByEmail(user.Email).catch(() => { });
     if (userEmail)
         throw new Error("Email has already been used");
     try {
@@ -76,13 +77,17 @@ async function AddFriend(id: string, idFriend: string) {
     }
 }
 
-async function Reported(id: string, reson: IReson) {
-    const user = await UserModel.findById(id);
+async function Reported(email: string, reson: IReson) {
+    const user = await UserModel.findOne({Email: email});
     if (!user)
         throw new Error("Find User null");
-    user.ResonReport.push(reson);
+
+    const report = new ReportModel({...reson, User:user._id });
+    report.save();
+    user.ResonReport.push(report._id);
     user.save();
-    return user;
+    const newUser = await UserModel.findOne({Email: email}).populate("ResonReport");
+    return newUser;
 }
 
 export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported, getAll, GetUserByEmail };
