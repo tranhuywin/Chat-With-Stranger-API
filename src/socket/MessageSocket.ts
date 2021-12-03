@@ -40,13 +40,15 @@ export const Message = (io: Server, socket: Socket, queue: any, rooms: any, name
             socket.to(user).socketsJoin(room);
             socket.emit('start-search-stranger', {
                 message: 'Bắt đầu chat',
+                isStart: true
             });
             socket.to(user).emit('start-search-stranger', {
                 message: 'Bắt đầu chat',
+                isStart: true
             });
         } else {
             queue.push(socket.id);
-            socket.emit('start-search-stranger', {message: 'Bắt đầu tìm kiếm'});
+            socket.emit('start-search-stranger', {message: 'Bắt đầu tìm kiếm', isStart: false});
         }
 
     }
