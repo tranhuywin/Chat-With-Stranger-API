@@ -64,4 +64,13 @@ router.put('/me/:idUser', async (req: Request, res: Response) => {
     })
 })
 
+router.get('/me/:email/friends', async (req: Request, res: Response) => {
+    const { email } = req.params;
+    UserService.GetFriends(email).then((friends) => {
+        res.status(200).json({ status: "Success", friends: friends });
+    }).catch((e: Error) => {
+        res.status(400).json({ status: e.message });
+    })
+})
+
 export default router;

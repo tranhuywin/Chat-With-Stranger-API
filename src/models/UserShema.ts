@@ -17,8 +17,8 @@ const UserSchema = new Schema({
     },
     CodeAddFriend: { type: String, required: true },
     NumberOfTimesReported: { type: Number, default: 0 },
-    ListFriends: { type: [mongoose.Types.ObjectId], required: false },
-    ListBlocks: { type: [mongoose.Types.ObjectId], required: false },
+    ListFriends: { type: [String], required: false },
+    ListBlocks: { type:  [String], required: false },
     ResonReport: {type: [mongoose.Types.ObjectId], ref: 'Report'},
 });
 

@@ -41,6 +41,9 @@
             socket.on('chat-end', (data) =>{
                 console.log(data)
             })
+            socket.on('friend:listen-add-friend', data => {
+                console.log(data);
+            });
             const sendMessage = () => {
                 const messageInput = document.querySelector(".message");
                 const roomInput = document.querySelector(".room");
@@ -59,13 +62,13 @@
             };
 
             const addFriend = () => {
-                socket.emit("friend:request-add-friend", "id");
+                socket.emit("friend:request-add-friend", "conga@gmail.com", "letuananh2@gmail.com");
             };
 
             const IaddFriend = {
-                _id: "6146adab6056c30c8fa03919",
+                fromEmail: "conga@gmail.com",
                 dateAt: "2021-10-2",
-                _idFriend: "614e91a25c6521171a82a2bc",
+                toEmail: "letuananh2@gmail.com",
             };
             const acceptFriend = () => {
                 socket.emit("friend:accept-request-add-friend", IaddFriend);

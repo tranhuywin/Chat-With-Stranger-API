@@ -55,22 +55,24 @@ async function UpdateUser(id: string, user: IUser) {
     }
 }
 
-async function AddFriend(id: string, idFriend: string) {
+async function AddFriend(email: string, emailFriend: string) {
     try {
-        const user = await UserModel.findById(id);
-        const friend = await UserModel.findById(idFriend);
+        const user = await UserModel.findOne({ Email: email });
+        const friend = await UserModel.findOne({ Email: emailFriend });
+        
         if (!user || !friend)
             throw new Error("Find User null");
 
         user.ListFriends.find((value) => {
-            if (idFriend === value.toString()) {
+            if (emailFriend === value.toString()) {
                 throw new Error("User had idfriend");
             }
         });
-        user.ListFriends.push(idFriend);
+        user.ListFriends.push(emailFriend);
         user.save();
-        friend.ListFriends.push(id);
+        friend.ListFriends.push(email);
         friend.save();
+        
         return user;
     } catch (error) {
         throw new Error("Update User failed");
@@ -90,4 +92,13 @@ async function Reported(email: string, reson: IReson) {
     return newUser;
 }
 
-export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported, getAll, GetUserByEmail };
+async function GetFriends(email: string) {
+    const user = await UserModel.findOne({Email: email});
+    if (!user)
+        throw new Error("Find User null");
+
+    const newUser = await UserModel.findOne({Email: email})
+    return newUser?.ListFriends;
+}
+
+export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported, getAll, GetUserByEmail, GetFriends };
