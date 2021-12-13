@@ -101,4 +101,15 @@ async function GetFriends(email: string) {
     return newUser?.ListFriends;
 }
 
-export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported, getAll, GetUserByEmail, GetFriends };
+async function AddFriendByCode(email: string, code: string) {
+    const user = await UserModel.findOne({CodeAddFriend: code});
+    const me = await UserModel.findOne({Email: email});
+    if (!user)
+        throw new Error("Find User null");
+    if (!me)
+    throw new Error("Find User null");
+
+    const a = await AddFriend(email, user.Email);
+    return {status: "success"};
+}
+export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported, getAll, GetUserByEmail, GetFriends, AddFriendByCode };
