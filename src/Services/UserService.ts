@@ -68,9 +68,9 @@ async function AddFriend(email: string, emailFriend: string) {
                 throw new Error("User had idfriend");
             }
         });
-        user.ListFriends.push({email: emailFriend, room: (user.Email +"#"+ friend.Email)});
+        user.ListFriends.push({email: emailFriend, room: (user.Email +"#"+ friend.Email), fullName: friend.FullName, avatar: friend.Avatar});
         user.save();
-        friend.ListFriends.push({email: email, room: (user.Email +"#"+ friend.Email)});
+        friend.ListFriends.push({email: email, room: (user.Email +"#"+ friend.Email), fullName: user.FullName, avatar: user.Avatar});
         friend.save();
         
         return user;
