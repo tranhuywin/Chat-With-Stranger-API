@@ -73,8 +73,8 @@ router.get('/me/:email/friends', async (req: Request, res: Response) => {
     })
 })
 
-router.post('/add-friend/:email', async (req: Request, res: Response) => {
-    const { email } = req.params;
+router.post('/add-friend/', async (req: Request, res: Response) => {
+    const email = req.query['email']?.toString() || '';
     const { code } = req.body;
     await UserService.AddFriendByCode(email, code);
     res.status(200).json({ status: "Success" });

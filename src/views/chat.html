@@ -7,10 +7,11 @@
     <body>
         <h3 class="idUser"></h3>
         <button onclick="getid()">get id</button><br />
-        <label>text: </label><input type="text" class="message" />
+        <label>text: </label><input type="text" class="message" /><br />
         <button onclick="sendMessage()">send</button><br />
-        <label>room: </label><input type="text" class="room" />
-        <button onclick="joinRoom()">join</button><br />
+        <button onclick="sendMessageFriend()">send friend</button><br />
+        <label>room: </label><input type="text" class="room" /><br />
+        <button onclick="joinRoom()">Start App (join all room)</button><br />
         <button onclick="addFriend()">add friend</button><br />
         <button onclick="acceptFriend()">accept friend</button><br />
         <button onclick="StartChat()">start chat</button><br />
@@ -46,13 +47,19 @@
             });
             const sendMessage = () => {
                 const messageInput = document.querySelector(".message");
-                const roomInput = document.querySelector(".room");
                 socket.emit("message:send-message", messageInput.value);
             };
 
-            const joinRoom = () => {
+            const sendMessageFriend = () => {
+                const messageInput = document.querySelector(".message");
                 const roomInput = document.querySelector(".room");
-                socket.emit("room:join-room", roomInput.value);
+                socket.emit("message:send-message-friend", messageInput.value, roomInput.value);
+            };
+
+            const joinRoom = () => {    // join all room when app start
+                const roomInput = document.querySelector(".room");
+                socket.emit("room:join-room", "letuananh@gmail.com"); // email chinh minh, de join vaof cac room ma tk co
+                //socket.emit("room:join-room", "letuananh2@gmail.com");
             };
 
             const getid = () => {

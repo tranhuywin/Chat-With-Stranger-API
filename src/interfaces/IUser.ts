@@ -12,7 +12,7 @@ export default interface IUser extends Document {
     }
     CodeAddFriend: string,
     NumberOfTimesReported: number,
-    ListFriends:[string],
+    ListFriends:[Object],
     ListBlocks:[string],
     ResonReport:[{
         Reson: string,

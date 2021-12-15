@@ -26,6 +26,28 @@ export const Message = (io: Server, socket: Socket, queue: any, rooms: any, name
         });
     }
 
+    function sendMessageToFriend(message: string, room: string){
+        const newMessage = FilterMessage(message);
+        const date = new Date();
+        const time = date.getHours() + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
+        const data = {
+            message: newMessage,
+            time: time,
+            isMyMessage: true
+        };
+        console.log(data);
+        socket.emit('receive-message-from-room', {
+            message: newMessage,
+            time: time,
+            isMyMessage: true
+        });
+        socket.broadcast.to(room).emit('receive-message-from-room', {
+            message: newMessage,
+            time: time,
+            isMyMessage: false
+        });
+    }
+
     function StartSearchStranger(nameUser: string){
         names[socket.id] = nameUser;
         allUsers[socket.id] = socket;
@@ -68,6 +90,7 @@ export const Message = (io: Server, socket: Socket, queue: any, rooms: any, name
         socket.to(peerID).socketsLeave(room);
     }
 
+    socket.on("message:send-message-friend", sendMessageToFriend);
     socket.on('message:send-message', SendMessage);
     socket.on('message:start-search-stranger', StartSearchStranger);
     socket.on('message:end-chat-stranger', EndChatStranger);

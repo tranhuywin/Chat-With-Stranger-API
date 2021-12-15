@@ -68,9 +68,9 @@ async function AddFriend(email: string, emailFriend: string) {
                 throw new Error("User had idfriend");
             }
         });
-        user.ListFriends.push(emailFriend);
+        user.ListFriends.push({email: emailFriend, room: (user.Email +"#"+ friend.Email)});
         user.save();
-        friend.ListFriends.push(email);
+        friend.ListFriends.push({email: email, room: (user.Email +"#"+ friend.Email)});
         friend.save();
         
         return user;
@@ -109,7 +109,7 @@ async function AddFriendByCode(email: string, code: string) {
     if (!me)
     throw new Error("Find User null");
 
-    const a = await AddFriend(email, user.Email);
+    await AddFriend(email, user.Email);
     return {status: "success"};
 }
 export default { CreateUser, GetUser, UpdateUser, AddFriend, Reported, getAll, GetUserByEmail, GetFriends, AddFriendByCode };

@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import IUser from '../interfaces/IUser';
-import { ReportSchema } from './ReportSchema';
 
 const Schema = mongoose.Schema;
 
@@ -17,7 +16,7 @@ const UserSchema = new Schema({
     },
     CodeAddFriend: { type: String, required: true },
     NumberOfTimesReported: { type: Number, default: 0 },
-    ListFriends: { type: [String], required: false },
+    ListFriends: { type: [Object], required: false },
     ListBlocks: { type:  [String], required: false },
     ResonReport: {type: [mongoose.Types.ObjectId], ref: 'Report'},
 });

@@ -1,9 +1,15 @@
 import { Socket, Server } from "socket.io";
-import socket from ".";
+import UserService from "../Services/UserService";
 
 export const Room = (io: Server, socket: Socket) => {
-    function JoinRoom(room: string) {
-        socket.join(room);
+    async function JoinRoom(email: string) {
+        await UserService.GetUserByEmail(email)
+        .then((users) => {
+            users.ListFriends.forEach((user:any) => {
+                socket.join(user.room);
+            }
+            )})
+        //socket.join(room);
     }
     function LeaveRoom(room: string) {
         socket.leave(room);
