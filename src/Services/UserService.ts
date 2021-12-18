@@ -45,9 +45,9 @@ async function GetUserByEmail(email: string): Promise<IUser> {
     }
 }
 
-async function UpdateUser(id: string, user: IUser) {
+async function UpdateUser(email: string, user: IUser) {
     try {
-        const result = await UserModel.findByIdAndUpdate(id, user, { new: true });
+        const result = await UserModel.findOneAndUpdate({Email: email}, user, { new: true });
         await result.save();
         return result;
     } catch (error) {

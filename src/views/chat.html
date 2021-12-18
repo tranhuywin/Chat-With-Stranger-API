@@ -58,8 +58,8 @@
 
             const joinRoom = () => {    // join all room when app start
                 const roomInput = document.querySelector(".room");
-                socket.emit("room:join-room", "letuananh@gmail.com"); // email chinh minh, de join vaof cac room ma tk co
-                //socket.emit("room:join-room", "letuananh2@gmail.com");
+                //socket.emit("room:join-room", "letuananh@gmail.com"); // email chinh minh, de join vaof cac room ma tk co
+                socket.emit("room:join-room", "letuananh2@gmail.com");
             };
 
             const getid = () => {

@@ -46,8 +46,8 @@ router.get('/email/user', async (req: Request, res: Response) => {
     })
 
 
-router.put('/me/:idUser', async (req: Request, res: Response) => {
-    const { idUser } = req.params;
+router.put('/me/', async (req: Request, res: Response) => {
+    const email = req.query['email']?.toString() || '';
     //validation data Request
     const user = req.body;
     try {
@@ -57,7 +57,7 @@ router.put('/me/:idUser', async (req: Request, res: Response) => {
         return;
     }
 
-    UserService.UpdateUser(idUser, user).then((user) => {
+    UserService.UpdateUser(email, user).then((user) => {
         res.status(200).json({ status: "Success", user: user });
     }).catch((e: Error) => {
         res.status(400).json({ status: e.message });
